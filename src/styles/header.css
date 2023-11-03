@@ -1,0 +1,156 @@
+.header__top {
+  background-color: rgb(25, 135, 84);
+  color: white;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.header__logo {
+  column-gap: 0.8rem;
+}
+
+.header__logo a {
+  color: white;
+  transition: color 0.3s;
+}
+
+.header__logo a:hover {
+  color: rgb(93, 198, 247);
+}
+
+.header__logo a img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.moreOptions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header__logo p {
+  font-size: 1.1rem;
+}
+
+.moreOptions div span i {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Header Navigation Styles */
+
+.header__navbar {
+  padding: 16px 0;
+  background-color: rgb(25, 135, 84);
+}
+
+.toggle__menu {
+  display: flex;
+  align-items: center;
+  column-gap: 2.7rem;
+  color: white;
+  position: relative;
+}
+
+.toggle__menu a {
+  color: white;
+  transition: color 0.3s;
+}
+
+.toggle__menu a:hover {
+  color: rgb(93, 198, 247);
+}
+
+.toggle__menu a.active {
+  color: rgb(93, 198, 247);
+  border-bottom: 2px solid rgb(93, 198, 247);
+}
+
+.searchElement {
+  padding: 7px 12px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  background-color: rgb(11, 61, 38);
+}
+
+.searchElement input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  padding-right: 10px;
+}
+
+.searchElement input::placeholder {
+  color: white;
+}
+
+.searchElement i {
+  color: rgb(245, 231, 205);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.mobile__menu {
+  color: white;
+  display: none;
+}
+
+.mobile__menu i {
+  font-size: 1.2rem;
+}
+
+.closeMenu {
+  display: none;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: rgba(11, 61, 38);
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+  .mobile__menu {
+    display: block;
+  }
+
+  .header__navigation__left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(11, 61, 38, 0.637);
+    z-index: 9999;
+    display: none;
+  }
+
+  .toggle__menu {
+    width: 40%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2.7rem;
+  }
+
+  .toggle__menu a {
+    color: rgb(25, 135, 84);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .menu__visible {
+    display: block;
+  }
+
+  .closeMenu {
+    display: block;
+  }
+}
