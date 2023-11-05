@@ -98,34 +98,44 @@ const Header = (props) => {
                     </NavLink>
                   );
                 })}
+
+                <div>
+                  <span className="btn-group dropdown">
+                    <button
+                      type="button"
+                      className="btn btn-danger dropdown-toggle"
+                      style={{ width: 200 + "px" }}
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      New
+                    </button>
+                    <ul className="dropdown-menu w-100 createAndUpload">
+                      <li className="d-flex align-items-center dropdownItem">
+                        <Link
+                          to="#"
+                          className="d-flex align-items-center linkSignOut"
+                        >
+                          <i className="ri-folder-add-line"></i>
+                          <p className="mb-0">Create Folder</p>
+                        </Link>
+                      </li>
+                      <li className="d-flex align-items-center dropdownItem">
+                        <Link
+                          to="#"
+                          className="d-flex align-items-center linkSignOut"
+                        >
+                          <i className="ri-upload-2-line"></i>
+                          <p className="mb-0">Upload File</p>
+                        </Link>
+                      </li>
+                    </ul>
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* <div>
-              <span className="btn-group dropdown">
-                <button
-                  type="button"
-                  className="btn btn-success dropdown-toggle"
-                  style={{ width: 200 + "px" }}
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  NEW
-                </button>
-                <ul className="dropdown-menu">
-                  <li className="d-flex align-items-center dropdownItem">
-                    <Link
-                      to="#"
-                      className="d-flex align-items-center linkSignOut"
-                    >
-                      <i className="ri-logout-box-r-line signOutIcon"></i>
-                      <p className="mb-0">Create Folder</p>
-                    </Link>
-                  </li>
-                </ul>
-              </span>
-            </div> */}
-            <div className="header__navigation__right w-50">
+            <div className="header__navigation__right w-25">
               <div className="searchElement d-flex justify-content-between">
                 <input
                   type="text"

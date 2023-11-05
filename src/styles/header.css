@@ -141,6 +141,18 @@
   background-color: rgba(82, 72, 72, 0.137);
 }
 
+.createAndUpload li i {
+  color: black;
+}
+
+.createAndUpload li p {
+  color: #0d6efd;
+}
+
+.createAndUpload li:first-child {
+  margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 767px) {
   .mobile__menu {
     display: block;

@@ -33,6 +33,26 @@ const FormLogin = (props) => {
     });
   };
 
+  async function fetchRequest(data) {
+    try {
+      const promise = fetch(
+        "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: "react", password: "123456" }),
+        }
+      );
+
+      const result = (await promise).json();
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const checkForm = () => {
     if (name.length && password.length) {
       if (name === "react" && password === "123456") {
@@ -41,23 +61,27 @@ const FormLogin = (props) => {
           name,
         };
 
-        window
-          .fetch(
-            "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            }
-          )
-          .then(() => {
-            console.log("Success");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        // window
+        //   .fetch(
+        //     "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
+        //     {
+        //       method: "POST",
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization:
+        //           "Basic Uk9MRV9USUNLRVQ6VElDS0VUXzA3Y2U1ODY4NGI3MzAwOThiZGY5OWRkYTY5Y2Y5NDhjNWIyNjJlYzU=",
+        //       },
+        //       body: JSON.stringify({ userId: "react", password: "123456" }),
+        //     }
+        //   )
+        //   .then(() => {
+        //     console.log("Success");
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+
+        fetchRequest(data);
 
         localStorage.setItem("entry__data", JSON.stringify(data));
 
