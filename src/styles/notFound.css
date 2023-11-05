@@ -1,0 +1,37 @@
+.notFound {
+  background-color: white;
+  text-align: center;
+  padding: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  height: 100vh;
+  margin-top: 15px;
+}
+
+.notFound h1 {
+  font-size: 100px;
+  margin: 0;
+  color: #e74c3c;
+}
+
+.notFound p {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #333;
+}
+
+.notFound a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: rgb(93, 198, 247);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.notFound a:hover {
+  background-color: rgb(25, 135, 84);
+  color: white;
+}

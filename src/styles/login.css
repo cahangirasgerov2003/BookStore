@@ -1,0 +1,27 @@
+.loginContainer {
+  width: 450px;
+  background-color: white;
+  padding: 21px 64px;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px #0000003d, 0 0 2px #0000001f;
+}
+
+.logo__part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 18px;
+  margin-bottom: 69px;
+}
+
+.logo__part div p {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  color: rgb(25, 135, 84);
+}
+
+.logo__part div img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}

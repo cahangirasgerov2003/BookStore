@@ -1,16 +1,29 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import About from "../pages/About";
+import NotFound from "../pages/NotFound";
+import Login from "../pages/Login";
+import { connect } from "react-redux";
 
-const Routers = () => {
+const Routers = (props) => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />}></Route>
+      <Route
+        path="/"
+        element={props.logined ? <Dashboard /> : <Login />}
+      ></Route>
       <Route path="/dashboard" element={<Dashboard />}></Route>
       <Route path="/about" element={<About />}></Route>
+      <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );
 };
 
-export default Routers;
+const mapStateToProps = (state) => {
+  return {
+    logined: state.login.logined,
+  };
+};
+
+export default connect(mapStateToProps)(Routers);

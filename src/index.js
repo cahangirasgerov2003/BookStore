@@ -15,12 +15,16 @@ import "slick-carousel/slick/slick-theme.css";
 
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/configStore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div className="mainApp">
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </div>
 );

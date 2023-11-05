@@ -1,0 +1,71 @@
+.aboutUs {
+  background-color: white;
+  margin-top: 15px;
+  padding: 30px 0;
+}
+.about__bank__content {
+  padding: 40px;
+  border: 1px solid #ececec;
+  border-radius: 10px;
+  height: 100%;
+}
+.about__bank__content h1 {
+  color: rgb(255, 198, 40);
+}
+.about__bank__content p {
+  text-align: justify;
+}
+.bank__logo__section {
+  display: flex;
+  justify-content: center;
+}
+
+.bank__logo__section img {
+  border-radius: 10%;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.bank__info {
+  text-align: justify;
+}
+
+.bank__info h2,
+.bank__info h1 {
+  font-size: 25px;
+}
+
+.bank__info p {
+  font-size: 16px;
+}
+
+.bank__info__bottom {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.ingress__info__bottom {
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 991px) {
+  .bank__info {
+    padding: 40px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+  }
+
+  .whyIngress {
+    margin: 24px 0 !important;
+  }
+
+  .ingress__info__bottom {
+    width: 100%;
+  }
+
+  .bank__info__bottom {
+    text-align: justify;
+  }
+}

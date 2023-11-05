@@ -2,8 +2,12 @@ import React, { useRef } from "react";
 import "../../styles/header.css";
 import { Link, NavLink } from "react-router-dom";
 import BookStore from "../../assets/images/store__icon.png";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { connect } from "react-redux";
+import logout from "../../reducers/loginReducer";
 
-const Header = () => {
+const Header = (props) => {
   const menuRef = useRef(null);
   const headerNavLinks = [
     {
@@ -20,7 +24,12 @@ const Header = () => {
     menuRef.current.classList.toggle("menu__visible");
   }
 
-  return (
+  function logOutEvent() {
+    localStorage.removeItem("entry__data");
+    props.dispatch(logout());
+  }
+
+  const result = props.logined ? (
     <header className="header">
       <div className="header__top">
         <div className="container">
@@ -39,8 +48,27 @@ const Header = () => {
 
             <div className="col-6 moreOptions">
               <div>
-                <span>
-                  <i className="ri-more-2-fill"></i>
+                <span className="btn-group dropdown">
+                  <button
+                    type="button"
+                    className="btn dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i className="ri-more-2-fill"></i>
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li className="d-flex align-items-center dropdownItem">
+                      <Link
+                        to="#"
+                        className="d-flex align-items-center linkSignOut"
+                        onClick={logOutEvent}
+                      >
+                        <i className="ri-logout-box-r-line signOutIcon"></i>
+                        <p className="mb-0">Sign Out</p>
+                      </Link>
+                    </li>
+                  </ul>
                 </span>
               </div>
             </div>
@@ -72,6 +100,31 @@ const Header = () => {
                 })}
               </div>
             </div>
+
+            {/* <div>
+              <span className="btn-group dropdown">
+                <button
+                  type="button"
+                  className="btn btn-success dropdown-toggle"
+                  style={{ width: 200 + "px" }}
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  NEW
+                </button>
+                <ul className="dropdown-menu">
+                  <li className="d-flex align-items-center dropdownItem">
+                    <Link
+                      to="#"
+                      className="d-flex align-items-center linkSignOut"
+                    >
+                      <i className="ri-logout-box-r-line signOutIcon"></i>
+                      <p className="mb-0">Create Folder</p>
+                    </Link>
+                  </li>
+                </ul>
+              </span>
+            </div> */}
             <div className="header__navigation__right w-50">
               <div className="searchElement d-flex justify-content-between">
                 <input
@@ -85,8 +138,19 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </header>
+  ) : (
+    ""
   );
+
+  return result;
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    logined: state.login.logined,
+  };
+};
+
+export default connect(mapStateToProps)(Header);

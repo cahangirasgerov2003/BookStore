@@ -34,11 +34,6 @@
   font-size: 1.1rem;
 }
 
-.moreOptions div span i {
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
 /* Header Navigation Styles */
 
 .header__navbar {
@@ -108,10 +103,42 @@
   display: none;
   font-weight: 700;
   font-size: 1.5rem;
-  color: rgba(11, 61, 38);
+  color: rgb(11, 61, 38);
   position: absolute;
   top: 15px;
   right: 15px;
+}
+
+.moreOptions div span i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.signOutIcon {
+  color: black !important;
+}
+
+.linkSignOut {
+  column-gap: 0.5rem;
+}
+
+.linkSignOut p,
+.linkSignOut i {
+  font-size: 1.2rem;
+}
+
+.linkSignOut i {
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(82, 72, 72, 0.137);
 }
 
 @media only screen and (max-width: 767px) {
