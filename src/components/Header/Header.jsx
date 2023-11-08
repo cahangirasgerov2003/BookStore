@@ -1,14 +1,21 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "../../styles/header.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import BookStore from "../../assets/images/store__icon.png";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import logout from "../../reducers/loginReducer";
+import ModalForm from "../UI/ModalForm";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 const Header = (props) => {
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
   const headerNavLinks = [
     {
       path: "/dashboard",
@@ -25,9 +32,27 @@ const Header = (props) => {
   }
 
   function logOutEvent() {
+    navigate("/");
     localStorage.removeItem("entry__data");
     props.dispatch(logout());
   }
+
+  function searchResult() {
+    navigate("/dashboard?q=" + inputValue);
+    document.querySelector("#searchInput").value = "";
+  }
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   const result = props.logined ? (
     <header className="header">
@@ -112,22 +137,26 @@ const Header = (props) => {
                     </button>
                     <ul className="dropdown-menu w-100 createAndUpload">
                       <li className="d-flex align-items-center dropdownItem">
-                        <Link
-                          to="#"
-                          className="d-flex align-items-center linkSignOut"
+                        <Button
+                          className="d-flex align-items-center linkSignOut py-0"
+                          onClick={handleOpen}
                         >
                           <i className="ri-folder-add-line"></i>
-                          <p className="mb-0">Create Folder</p>
-                        </Link>
+                          <p className="mb-0" onClick={setOpen}>
+                            Create Folder
+                          </p>
+                        </Button>
+                        <ModalForm open={open} setOpen={setOpen} />
                       </li>
                       <li className="d-flex align-items-center dropdownItem">
-                        <Link
-                          to="#"
-                          className="d-flex align-items-center linkSignOut"
+                        <Button
+                          component="label"
+                          className="d-flex align-items-center linkSignOut py-0"
                         >
                           <i className="ri-upload-2-line"></i>
                           <p className="mb-0">Upload File</p>
-                        </Link>
+                          <VisuallyHiddenInput type="file" />
+                        </Button>
                       </li>
                     </ul>
                   </span>
@@ -138,11 +167,15 @@ const Header = (props) => {
             <div className="header__navigation__right w-25">
               <div className="searchElement d-flex justify-content-between">
                 <input
+                  id="searchInput"
                   type="text"
                   placeholder="Search ..."
                   className="w-100"
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                  }}
                 ></input>
-                <i className="ri-search-eye-line"></i>
+                <i className="ri-search-eye-line" onClick={searchResult}></i>
               </div>
             </div>
           </div>
