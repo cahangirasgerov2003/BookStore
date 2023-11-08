@@ -5,7 +5,7 @@ import BookStore from "../../assets/images/store__icon.png";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import logout from "../../reducers/loginReducer";
+import { LOGOUT } from "../../actions/loginActions";
 import ModalForm from "../UI/ModalForm";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -32,9 +32,8 @@ const Header = (props) => {
   }
 
   function logOutEvent() {
-    navigate("/");
     localStorage.removeItem("entry__data");
-    props.dispatch(logout());
+    props.dispatch(LOGOUT());
   }
 
   function searchResult() {

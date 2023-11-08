@@ -1,12 +1,12 @@
 // Actions Creater
 
-export const login = () => {
+export const LOGIN = () => {
   return {
     type: "LOGIN",
   };
 };
 
-export const logout = () => {
+export const LOGOUT = () => {
   return {
     type: "LOGOUT",
   };

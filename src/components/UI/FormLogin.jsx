@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { login } from "../../actions/loginActions";
+import { LOGIN } from "../../actions/loginActions";
 
 const FormLogin = (props) => {
   const [name, setName] = useState("");
@@ -33,59 +33,46 @@ const FormLogin = (props) => {
     });
   };
 
-  async function fetchRequest(data) {
-    try {
-      const promise = fetch(
-        "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: "react", password: "123456" }),
+  function fetchRequest(data) {
+    fetch(
+      "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "TICKET_b8137af0f9a0f0e9e7b3645ae53d0301aebf5581",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      );
-
-      const result = (await promise).json();
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
   }
 
   const checkForm = () => {
     if (name.length && password.length) {
       if (name === "react" && password === "123456") {
         let data = {
-          password,
-          name,
+          userId: name,
+          password: password,
         };
-
-        // window
-        //   .fetch(
-        //     "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets",
-        //     {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization:
-        //           "Basic Uk9MRV9USUNLRVQ6VElDS0VUXzA3Y2U1ODY4NGI3MzAwOThiZGY5OWRkYTY5Y2Y5NDhjNWIyNjJlYzU=",
-        //       },
-        //       body: JSON.stringify({ userId: "react", password: "123456" }),
-        //     }
-        //   )
-        //   .then(() => {
-        //     console.log("Success");
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-
-        fetchRequest(data);
 
         localStorage.setItem("entry__data", JSON.stringify(data));
 
-        props.dispatch(login());
+        props.dispatch(LOGIN());
+
+        fetchRequest(data);
 
         toastSuccess();
       } else {
