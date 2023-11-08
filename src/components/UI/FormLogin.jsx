@@ -41,7 +41,6 @@ const FormLogin = (props) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "TICKET_b8137af0f9a0f0e9e7b3645ae53d0301aebf5581",
         },
         body: JSON.stringify(data),
       }
