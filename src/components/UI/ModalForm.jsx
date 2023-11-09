@@ -43,12 +43,13 @@ const ModalForm = ({ open, setOpen }) => {
 
   const checkForm = () => {
     if (name && title && desc) {
-      // let newdata = {
-      //   name,
-      //   title,
-      //   desc
-      // };
       toastSuccess();
+      handleClose();
+      let newdata = {
+        name,
+        nodeType: "cm:folder",
+      };
+      pushRequest(newdata);
     } else {
       toastError();
     }
@@ -56,6 +57,35 @@ const ModalForm = ({ open, setOpen }) => {
     setTitle("");
     setDesc("");
   };
+
+  function pushRequest(data) {
+    const token = JSON.parse(localStorage.getItem("base64"));
+    const authorizationKey = `Basic ${token["base64"]}`;
+    fetch(
+      "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/alfresco/versions/1/nodes/382b3102-ffba-422e-8711-d7f330fb5468/children",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: authorizationKey,
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
+  }
 
   return (
     <div>

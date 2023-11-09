@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { LOGIN } from "../../actions/loginActions";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin = (props) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [openEyeName, setEyeName] = useState(false);
   const [openEyePassword, setEyePassword] = useState(false);
+  const navigate = useNavigate();
 
   const toastError = () => {
     toast.error("You are required to fill in all fields !", {
@@ -81,6 +83,7 @@ const FormLogin = (props) => {
 
         fetchRequest(data);
 
+        navigate("/dashboard");
         toastSuccess();
       } else {
         toastWarning();

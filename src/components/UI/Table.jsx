@@ -10,13 +10,14 @@ import TableRow from "@mui/material/TableRow";
 import { v4 as uuidv4 } from "uuid";
 import "../../styles/table.css";
 import { useSearchParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 const columns = [
   { id: "type", label: "Type", minWidth: 355 },
   { id: "name", label: "Name", minWidth: 355 },
 ];
 
-export default function ColumnGroupingTable() {
+function ColumnGroupingTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [request] = useSearchParams();
@@ -38,7 +39,7 @@ export default function ColumnGroupingTable() {
         const token = JSON.parse(localStorage.getItem("base64"));
         const authorizationKey = `Basic ${token["base64"]}`;
         const response = await fetch(
-          "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/alfresco/versions/1/nodes/382b3102-ffba-422e-8711-d7f330fb5468/children?maxItems=25&orderBy=isFolder%20desc%2Cname%20asc&include=path%2Cproperties%2CallowableOperations%2Cpermissions%2CaspectNames%2CisFavorite%2Cdefinition&includeSource=true",
+          "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/alfresco/versions/1/nodes/382b3102-ffba-422e-8711-d7f330fb5468/children?maxItems=1000&orderBy=isFolder%20desc%2Cname%20asc&include=path%2Cproperties%2CallowableOperations%2Cpermissions%2CaspectNames%2CisFavorite%2Cdefinition&includeSource=true",
           {
             method: "GET",
             headers: {
@@ -83,7 +84,7 @@ export default function ColumnGroupingTable() {
     fetchData();
   }, []);
 
-  return (
+  const result = props.logined ? (
     <Paper sx={{ width: "100%", marginTop: "15px" }}>
       <TableContainer sx={{ maxHeight: "100%" }}>
         <Table stickyHeader aria-label="sticky table">
@@ -142,5 +143,17 @@ export default function ColumnGroupingTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+  ) : (
+    ""
   );
+
+  return result;
 }
+
+const mapStateToProps = (state) => {
+  return {
+    logined: state.login.logined,
+  };
+};
+
+export default connect(mapStateToProps)(ColumnGroupingTable);

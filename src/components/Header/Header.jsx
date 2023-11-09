@@ -35,6 +35,7 @@ const Header = (props) => {
     localStorage.removeItem("entry__data");
     props.dispatch(LOGOUT());
     logOutRequest();
+    navigate("/");
   }
 
   function searchResult() {
