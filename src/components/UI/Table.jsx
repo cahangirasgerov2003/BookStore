@@ -12,28 +12,8 @@ import "../../styles/table.css";
 import { useSearchParams } from "react-router-dom";
 
 const columns = [
-  { id: "type", label: "Type", minWidth: 150 },
-  { id: "name", label: "Name", minWidth: 150 },
-  { id: "title", label: "Title", minWidth: 205 },
-  { id: "desc", label: "Description", minWidth: 205 },
-];
-
-function createData(type, name, title, desc) {
-  return { name, type, title, desc };
-}
-
-const rows = [
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("File", "TestFile", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
-  createData("Folder", "Test", "React", "Intern"),
+  { id: "type", label: "Type", minWidth: 355 },
+  { id: "name", label: "Name", minWidth: 355 },
 ];
 
 export default function ColumnGroupingTable() {
@@ -41,6 +21,7 @@ export default function ColumnGroupingTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [request] = useSearchParams();
   const searchKeyword = request.get("q");
+  const [rows, setRows] = React.useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -50,6 +31,57 @@ export default function ColumnGroupingTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  React.useEffect(() => {
+    async function pullRequest() {
+      try {
+        const token = JSON.parse(localStorage.getItem("base64"));
+        const authorizationKey = `Basic ${token["base64"]}`;
+        const response = await fetch(
+          "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/alfresco/versions/1/nodes/382b3102-ffba-422e-8711-d7f330fb5468/children?maxItems=25&orderBy=isFolder%20desc%2Cname%20asc&include=path%2Cproperties%2CallowableOperations%2Cpermissions%2CaspectNames%2CisFavorite%2Cdefinition&includeSource=true",
+          {
+            method: "GET",
+            headers: {
+              Accept: "*/*",
+              Authorization: authorizationKey,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error("Hata:", error);
+        throw error;
+      }
+    }
+
+    const fetchData = async () => {
+      try {
+        const arrayData = await pullRequest();
+        console.log("a", arrayData);
+        const data = arrayData["list"]["entries"].map((entry) => {
+          return {
+            name: entry.entry.name,
+            type: entry.entry.nodeType === "cm:folder" ? "Folder" : "File",
+          };
+        });
+
+        const row = data;
+        console.log(row);
+        setRows(row);
+      } catch (error) {
+        console.error("Hata:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Paper sx={{ width: "100%", marginTop: "15px" }}>
