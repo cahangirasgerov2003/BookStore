@@ -34,11 +34,42 @@ const Header = (props) => {
   function logOutEvent() {
     localStorage.removeItem("entry__data");
     props.dispatch(LOGOUT());
+    logOutRequest();
   }
 
   function searchResult() {
     navigate("/dashboard?q=" + inputValue);
     document.querySelector("#searchInput").value = "";
+  }
+
+  function logOutRequest() {
+    const token = JSON.parse(localStorage.getItem("base64"));
+    const authorizationKey = `Basic ${token["base64"]}`;
+    console.log(authorizationKey);
+    fetch(
+      "https://1curd3ms.trials.alfresco.com/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-",
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "*/*",
+          Authorization: authorizationKey,
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        localStorage.removeItem("base64");
+      })
+      .catch((error) => {
+        localStorage.removeItem("base64");
+        console.error("Hata:", error);
+      });
   }
 
   const VisuallyHiddenInput = styled("input")({

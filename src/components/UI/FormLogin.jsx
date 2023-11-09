@@ -53,6 +53,14 @@ const FormLogin = (props) => {
       })
       .then((data) => {
         console.log(data);
+        const base64 = btoa(`ROLE_TICKET:${data.entry.id}`);
+        console.log(base64);
+        localStorage.setItem(
+          "base64",
+          JSON.stringify({
+            base64: base64,
+          })
+        );
       })
       .catch((error) => {
         console.error("Hata:", error);
