@@ -35,7 +35,6 @@ const Header = (props) => {
     localStorage.removeItem("entry__data");
     props.dispatch(LOGOUT());
     logOutRequest();
-    navigate("/");
   }
 
   function searchResult() {
@@ -66,6 +65,7 @@ const Header = (props) => {
       .then((data) => {
         console.log(data);
         localStorage.removeItem("base64");
+        navigate("/");
       })
       .catch((error) => {
         localStorage.removeItem("base64");
